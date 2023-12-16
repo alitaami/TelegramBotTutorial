@@ -2,6 +2,7 @@ using Telegram.Bot.Polling;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
 using Telegram.Bot;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace TelegramBotTutorial
 {
@@ -51,7 +52,18 @@ namespace TelegramBotTutorial
             switch (text)
             {
                 case "/start":
-                    await bot.SendTextMessageAsync(chatId, $"Hi {firstName}");
+
+                    // We wanna have 3 rows of buttons in our bot
+                    KeyboardButton[][] list =
+                    {
+                     new KeyboardButton[] { new KeyboardButton("Button1"), new KeyboardButton("Button2"), new KeyboardButton("Button3") },
+                     new KeyboardButton[] { new KeyboardButton("Button4") },
+                     new KeyboardButton[] { new KeyboardButton("Button5"), new KeyboardButton("Button6") }
+                    };
+
+                    var keyboard = new ReplyKeyboardMarkup(list);
+
+                    await bot.SendTextMessageAsync(chatId, $"Hi {firstName}", /* user will see the buttons when it wanna use the bot */  replyMarkup: keyboard);
                     break;
 
                 default:
