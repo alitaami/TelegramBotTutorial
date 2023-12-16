@@ -3,6 +3,8 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
 using Telegram.Bot;
 using Telegram.Bot.Types.ReplyMarkups;
+using TelegramBotTutorial.ReplyButtons;
+using System.Collections.Generic;
 
 namespace TelegramBotTutorial
 {
@@ -41,7 +43,7 @@ namespace TelegramBotTutorial
 
             bot.StartReceiving(updateHandler: updateHandler, errorHandler, receivingOptions);
         }
-
+ 
         private async Task updateHandler(ITelegramBotClient bot, Update update, CancellationToken cancellationToken)
         {
             var text = update.Message.Text.ToLower();
@@ -51,25 +53,21 @@ namespace TelegramBotTutorial
 
             switch (text)
             {
-                case "/start":
+                case "/start": 
+                    await bot.SendTextMessageAsync(chatId, $"Hi {firstName}", /* user will see the buttons when it wanna use the bot */  replyMarkup: Replybutton.MainButtons());
+                    break;
 
-                    // We wanna have 3 rows of buttons in our bot
-                    KeyboardButton[][] list =
-                    {
-                     new KeyboardButton[] { new KeyboardButton("Button1"), new KeyboardButton("Button2"), new KeyboardButton("Button3") },
-                     new KeyboardButton[] { new KeyboardButton("Button4") },
-                     new KeyboardButton[] { new KeyboardButton("Button5"), new KeyboardButton("Button6") }
-                    };
+                case "button1": 
+                    await bot.SendTextMessageAsync(chatId, $"You clicked on Button1", /* user will see the buttons when it wanna use the bot */  replyMarkup: Replybutton.Button1());
+                    break;
 
-                    var keyboard = new ReplyKeyboardMarkup(list);
-
-                    await bot.SendTextMessageAsync(chatId, $"Hi {firstName}", /* user will see the buttons when it wanna use the bot */  replyMarkup: keyboard);
+                case "back":
+                    await bot.SendTextMessageAsync(chatId,"", /* user will see the buttons when it wanna use the bot */  replyMarkup: Replybutton.MainButtons());
                     break;
 
                 default:
-                    await bot.SendTextMessageAsync(chatId, "I do not understand what you said! ");
+                    await bot.SendTextMessageAsync(chatId, "I do not understand what you said!");
                     break;
-
             }
         }
         private async Task errorHandler(ITelegramBotClient bot, Exception ex, CancellationToken cancellationToken)
