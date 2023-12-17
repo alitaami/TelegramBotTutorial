@@ -56,7 +56,8 @@
             this.txtToken.Name = "txtToken";
             this.txtToken.Size = new System.Drawing.Size(591, 29);
             this.txtToken.TabIndex = 1;
-            this.txtToken.Text = "6398217002:AAEGPeH_8hexv2thugdBeLyxdeQCqsblL6A";
+            this.txtToken.Text = "6739209948:AAGsKmZSNEBDynPpagUZSokf57GrZnhk4o8";
+            this.txtToken.TextChanged += new System.EventHandler(this.txtToken_TextChanged);
             // 
             // txtConnect
             // 
