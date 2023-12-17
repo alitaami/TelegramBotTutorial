@@ -1,4 +1,4 @@
-using Telegram.Bot.Polling;
+﻿using Telegram.Bot.Polling;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types;
 using Telegram.Bot;
@@ -38,7 +38,9 @@ namespace TelegramBotTutorial
                 AllowedUpdates = new UpdateType[]
                 {
                  UpdateType.Message,
-                 UpdateType.CallbackQuery
+                 UpdateType.CallbackQuery,
+                 UpdateType.Poll,
+                 UpdateType.PollAnswer
                 }
             };
 
@@ -50,6 +52,14 @@ namespace TelegramBotTutorial
             if (update.CallbackQuery != null)
             {
                 await ManageCallbackQueryAsync(bot, update, cancellationToken);
+            }
+            else if (update.Poll != null)
+            {
+                // We can have access to all information of the poll
+            }
+            else if (update.PollAnswer != null)
+            {
+                // We can have access to data of quiz polls ( polls those have answers)
             }
             else
             {
@@ -70,6 +80,19 @@ namespace TelegramBotTutorial
 
                     case "button2":
                         await bot.SendTextMessageAsync(chatId, $"We are testing inline buttons", /* user will see the buttons when it wanna use the bot */  replyMarkup: InlineButtons.Button2());
+                        break;
+                    
+                    case "button3":
+                        
+                        // it returns data of that poll, we can have access to them and store them in DB in future
+                       var res = await bot.SendPollAsync(chatId,
+                           question:"آیا از چنل ما راضی هستید؟",
+                           new string[] {"بلی","خیر","دیدن نتایج"},    
+                           correctOptionId:0, 
+                           ,isAnonymous: false,
+                           closeDate:  DateTime.Now.AddMinutes(1),
+                           type:PollType.Quiz,cancellationToken:cancellationToken);
+
                         break;
 
                     case "back":
