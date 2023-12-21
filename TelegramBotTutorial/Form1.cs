@@ -81,17 +81,44 @@ namespace TelegramBotTutorial
                     case "button2":
                         await bot.SendTextMessageAsync(chatId, $"We are testing inline buttons", /* user will see the buttons when it wanna use the bot */  replyMarkup: InlineButtons.Button2());
                         break;
-                    
-                    case "button3":
                         
+                    case "button4":
+                        
+                        //var image1 = InputFile.FromUri("https://picsum.photos/200/300");
+                        //var message = await bot.SendPhotoAsync(chatId, image1, caption:"file sent by url");
+
+                        ////we can get file id from the message
+                        //// if we have file in the past,  telegram recomend this to use  to donot directly upload a file
+                        //var image2 = InputFile.FromFileId(message.Photo[0].FileId);
+                        //await bot.SendPhotoAsync(chatId, image2, caption: "file sent by fileId");
+
+                        //var stream = new StreamReader("1.jpg").BaseStream;
+                        //await bot.SendPhotoAsync(chatId, InputFile.FromStream(stream), caption: "file sent by stream");
+
+                        //await bot.SendVoiceAsync(chatId, InputFile.FromUri(""), caption: "Voice sent by url");
+
+                        //var stream1 = new StreamReader("2.mp3").BaseStream;
+                        //await bot.SendVoiceAsync(chatId, InputFile.FromStream(stream1), caption: "Voice sent by stream");
+                        //await bot.SendAudioAsync(chatId, InputFile.FromStream(stream1), caption: "audio sent by url");
+
+                        //var stream2 = new StreamReader("3.mp4").BaseStream;
+                        //await bot.SendVideoAsync(chatId, InputFile.FromStream(stream2), caption: "Video sent by stream");
+
+                        await bot.SendContactAsync(chatId, "+989301327634", "Ali", lastName: "Taami",replyToMessageId:update.Message.MessageId);
+
+                        await bot.SendLocationAsync(chatId, 70.030, 56.5454); 
+                            break;
+
+                    case "button3":
+
                         // it returns data of that poll, we can have access to them and store them in DB in future
-                       var res = await bot.SendPollAsync(chatId,
-                           question:"آیا از چنل ما راضی هستید؟",
-                           new string[] {"بلی","خیر","دیدن نتایج"},    
-                           correctOptionId:0, 
-                           ,isAnonymous: false,
-                           closeDate:  DateTime.Now.AddMinutes(1),
-                           type:PollType.Quiz,cancellationToken:cancellationToken);
+                        var res = await bot.SendPollAsync(chatId,
+                            question: "آیا از چنل ما راضی هستید؟",
+                            new string[] { "بلی", "خیر", "دیدن نتایج" },
+                            correctOptionId: 0,
+                            isAnonymous: false,
+                            closeDate: DateTime.Now.AddMinutes(1),
+                            type: PollType.Quiz, cancellationToken: cancellationToken);
 
                         break;
 
@@ -124,7 +151,7 @@ namespace TelegramBotTutorial
                 case "button9":
                     await bot.SendTextMessageAsync(chatId, "thanks for your vote", replyMarkup: InlineButtons.YesButton());
                     break;
-                
+
                 case "button11":
                     await bot.SendTextMessageAsync(chatId, "thanks for your vote");
                     break;
